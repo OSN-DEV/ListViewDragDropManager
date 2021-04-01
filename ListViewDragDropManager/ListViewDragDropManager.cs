@@ -180,7 +180,8 @@ namespace WPF.JoshSmith.ServiceProviders.UI {
         /// ドロップ完了イベント通知
         /// </summary>
         /// <remarks>ProcessDropを使用するとリストの並べ替えを自前で実装する必要があるので、並べ替えはライブラリで行った上でイベントを通知する。</remarks>
-        public event Action DropDone;
+        public delegate void DropDoneHandler(int index);
+        public event DropDoneHandler DropDone;
 
         /// <summary>
         /// Gets/sets whether a visual representation of the ListViewItem being dragged
@@ -352,7 +353,7 @@ namespace WPF.JoshSmith.ServiceProviders.UI {
 
                 // Set the Effects property so that the call to DoDragDrop will return 'Move'.
                 e.Effects = DragDropEffects.Move;
-                DropDone?.Invoke();
+                DropDone?.Invoke(newIndex);
             }
         }
         #endregion // Event Handling Methods
